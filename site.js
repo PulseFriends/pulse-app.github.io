@@ -1,11 +1,9 @@
-// Pulse website: parallax, scroll moments, and the "hold to talk" demo.
-// Everything here is decoration; the page reads fine without it.
 (() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
-  /* ---------------------------------------------------------- stars */
+  // stars
   let seed = 7;
   const rand = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
   for (const sky of $$('[data-stars]')) {
@@ -20,13 +18,13 @@
     sky.appendChild(frag);
   }
 
-  /* ---------------------------------------------------------- nav */
+  // nav
   const nav = $('#nav');
   const onScrollNav = () => nav.classList.toggle('scrolled', window.scrollY > 20);
   onScrollNav();
   window.addEventListener('scroll', onScrollNav, { passive: true });
 
-  /* ---------------------------------------------------------- reveal on scroll */
+  // reveal on scroll
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
@@ -40,7 +38,7 @@
   );
   $$('.reveal').forEach((el) => io.observe(el));
 
-  /* ---------------------------------------------------------- the dying group chat */
+  // the dying group chat
   const chat = $('#chat');
   if (chat) {
     new IntersectionObserver(
@@ -54,7 +52,7 @@
     ).observe(chat);
   }
 
-  /* ---------------------------------------------------------- "Pulse is not" strike-throughs */
+  // "Pulse is not" strike-throughs
   const lines = $$('#notlines > div');
   if (lines.length) {
     new IntersectionObserver(
@@ -67,7 +65,7 @@
     ).observe($('#notlines'));
   }
 
-  /* ---------------------------------------------------------- how it works: sticky phone */
+  // how it works: sticky phone
   const steps = $$('.step');
   const shots = $$('.sticky .shot');
   const pips = $$('.sticky-pips .pip');
@@ -93,7 +91,7 @@
     steps.forEach((s) => stepIO.observe(s));
   }
 
-  /* ---------------------------------------------------------- parallax */
+  // parallax
   const layers = $$('[data-depth]').map((el) => ({ el, depth: Number(el.dataset.depth), host: el.closest('section') ?? document.body }));
   const hero = $('.hero');
   let mx = 0;
@@ -138,7 +136,7 @@
   };
   if (!reduce) requestAnimationFrame(frame);
 
-  /* ---------------------------------------------------------- hold-to-talk demo */
+  // hold-to-talk demo
   const hold = $('#hold');
   const say = $('.demo .say');
   const strip = $('#strip');
